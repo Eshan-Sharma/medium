@@ -6,7 +6,7 @@ export const userRouter = new Hono<{
   Bindings: { DATABASE_URL: string; JWT_SECRET: string };
 }>();
 
-userRouter.post("/api/v1/signup", async (c) => {
+userRouter.post("/signup", async (c) => {
   const prisma = new PrismaClient({
     datasourceUrl: c.env?.DATABASE_URL,
   }).$extends(withAccelerate());
@@ -27,7 +27,7 @@ userRouter.post("/api/v1/signup", async (c) => {
   }
 });
 
-userRouter.post("/api/v1/signin", async (c) => {
+userRouter.post("/signin", async (c) => {
   const prisma = new PrismaClient({
     datasourceUrl: c.env?.DATABASE_URL,
   }).$extends(withAccelerate());
