@@ -12,3 +12,10 @@ export const postInput = z.object({
   content: z.string(),
 });
 export type PostInput = z.infer<typeof postInput>;
+
+export const updatePostInput = z.object({
+  title: z.string(),
+  content: z.string(),
+  id: z.string(),
+});
+export type UpdatePostInput = z.infer<typeof updatePostInput>;
