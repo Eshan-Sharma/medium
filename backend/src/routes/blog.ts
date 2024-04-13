@@ -2,6 +2,8 @@ import { Hono } from "hono";
 import { verify } from "hono/jwt";
 import { PrismaClient } from "@prisma/client/edge";
 import { withAccelerate } from "@prisma/extension-accelerate";
+import { postInput } from "../../../common/src/index";
+import { updatePostInput } from "../../../common/src/index";
 export const blogRouter = new Hono<{
   Bindings: { DATABASE_URL: string; JWT_SECRET: string };
   Variables: { userId: string };
@@ -61,6 +63,11 @@ blogRouter.get("/:id", async (c) => {
 blogRouter.post("/", async (c) => {
   try {
     const body = await c.req.json();
+    const success = body.safeParser(postInput);
+    if (!success) {
+      c.status(411);
+      return c.json({ message: "Invalid inputs" });
+    }
     const authorId = c.get("userId");
     const prisma = new PrismaClient({
       datasourceUrl: c.env?.DATABASE_URL,
@@ -80,6 +87,11 @@ blogRouter.post("/", async (c) => {
 blogRouter.put("/", async (c) => {
   try {
     const body = await c.req.json();
+    const success = body.safeParser(updatePostInput);
+    if (!success) {
+      c.status(411);
+      return c.json({ message: "Invalid inputs" });
+    }
     const prisma = new PrismaClient({
       datasourceUrl: c.env?.DATABASE_URL,
     }).$extends(withAccelerate());
