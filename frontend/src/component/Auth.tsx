@@ -1,7 +1,9 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { LabelledInput } from "./LabelledInput";
 import { useState } from "react";
 import { SignupInput } from "../../../common/src/index";
+import axios from "axios";
+import { BACKEND_URL } from "../config";
 
 export const Auth = ({ type }: { type: "signup" | "signin" }) => {
   const [postInputs, setPostInputs] = useState<SignupInput>({
@@ -9,6 +11,21 @@ export const Auth = ({ type }: { type: "signup" | "signin" }) => {
     email: "",
     password: "",
   });
+  const navigate = useNavigate();
+  async function sendRequest() {
+    try {
+      const response = await axios.post(
+        `${BACKEND_URL}/api/v1/user/${type === "signup" ? "signup" : "signin"}`,
+        postInputs
+      );
+      const jwt = response.data;
+      localStorage.setItem("token", jwt);
+      navigate("/blogs");
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   return (
     <>
       <div className="h-screen flex justify-center flex-col">
@@ -65,6 +82,7 @@ export const Auth = ({ type }: { type: "signup" | "signin" }) => {
                 }}
               />
               <button
+                onClick={sendRequest}
                 type="button"
                 className="mt-8 w-full text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
               >
