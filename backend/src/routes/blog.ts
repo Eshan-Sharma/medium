@@ -63,7 +63,7 @@ blogRouter.get("/:id", async (c) => {
 blogRouter.post("/", async (c) => {
   try {
     const body = await c.req.json();
-    const success = body.safeParse(postInput);
+    const success = postInput.safeParse(body);
     if (!success) {
       c.status(411);
       return c.json({ message: "Invalid inputs" });
@@ -87,7 +87,7 @@ blogRouter.post("/", async (c) => {
 blogRouter.put("/", async (c) => {
   try {
     const body = await c.req.json();
-    const success = body.safeParse(updatePostInput);
+    const success = updatePostInput.safeParse(body);
     if (!success) {
       c.status(411);
       return c.json({ message: "Invalid inputs" });

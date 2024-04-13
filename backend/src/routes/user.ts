@@ -14,7 +14,7 @@ userRouter.post("/signup", async (c) => {
   }).$extends(withAccelerate());
 
   const body = await c.req.json();
-  const success = body.safeParse(signupInput);
+  const { success } = signupInput.safeParse(body);
   if (!success) {
     c.status(411);
     return c.json({ message: "Invalid inputs" });
@@ -40,7 +40,7 @@ userRouter.post("/signin", async (c) => {
   }).$extends(withAccelerate());
   try {
     const body = await c.req.json();
-    const success = body.safeParse(signinInput);
+    const { success } = signinInput.safeParse(body);
     if (!success) {
       c.status(411);
       return c.json({ message: "Invalid inputs" });
