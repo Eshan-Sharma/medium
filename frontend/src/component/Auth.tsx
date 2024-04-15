@@ -60,7 +60,7 @@ export const Auth = ({ type }: { type: "signup" | "signin" }) => {
                 />
               ) : null}
               <LabelledInput
-                label="Username"
+                label="Email"
                 placeholder="example@gmail.com"
                 type="text"
                 onChange={(e) => {
