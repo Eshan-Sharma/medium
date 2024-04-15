@@ -1,8 +1,10 @@
+import { Appbar } from "../component/Appbar";
 import { BlogCard } from "../component/BlogCard";
 
 export const Blogs = () => {
   return (
     <>
+      <Appbar />
       <div className="flex justify-center">
         <div className="flex justify-center max-w-xl">
           <BlogCard
