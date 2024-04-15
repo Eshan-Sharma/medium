@@ -4,11 +4,11 @@ interface BlogCardProps {
   title: string;
   content: string;
   publishedDate: string;
-  id: number;
+  id: string;
 }
 
 export const BlogCard = ({
-  id = 1,
+  id,
   authorName,
   title,
   content,
